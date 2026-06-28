@@ -1,0 +1,21 @@
+feature,type,iv,strength
+component_size_apps,numeric,0.65,suspiciously strong (check leakage)
+n_neighbors_sharing_2plus_elements,numeric,0.65,suspiciously strong (check leakage)
+max_element_reuse,numeric,0.65,suspiciously strong (check leakage)
+n_distinct_element_types_reused_with_top_neighbor,numeric,0.5975224478494685,suspiciously strong (check leakage)
+n_elements_reused,numeric,0.5944772614972759,suspiciously strong (check leakage)
+limit_to_income_ratio,numeric,0.46824320400190034,strong
+shares_multi_element_with_any_neighbor,boolean,0.3783073515217013,strong
+email_domain,categorical,0.33095207821215045,strong
+bureau_inquiries_90d,numeric,0.30865642561649353,strong
+time_to_fill_form_seconds,numeric,0.2685792437643817,medium
+address_tenure_months,numeric,0.238572527454105,medium
+ssn_dob_gap_years,numeric,0.23128557548484027,medium
+credit_file_age_years,numeric,0.22457460889248498,medium
+bureau_hit,boolean,0.21669704020814962,medium
+thin_file_flag,boolean,0.2160933568617936,medium
+requested_credit_limit,numeric,0.2068001985925196,medium
+claimed_age,numeric,0.1764894178415753,medium
+phone_is_voip,boolean,0.14606740450227887,medium
+annual_income,numeric,0.07277182210484442,weak
+app_degree,numeric,0.0,not useful

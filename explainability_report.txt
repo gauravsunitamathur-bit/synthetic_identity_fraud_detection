@@ -1,0 +1,72 @@
+[feature_engineering] Dropped 7 feature(s) for high correlation (>|0.55|) with a stronger already-selected feature: ['component_size_apps', 'credit_file_age_years', 'max_element_reuse', 'n_distinct_element_types_reused_with_top_neighbor', 'n_elements_reused', 'requested_credit_limit', 'shares_multi_element_with_any_neighbor']
+=== GLOBAL IMPORTANCE: LOGISTIC SCORECARD ===
+                               feature  importance_mean  importance_std
+n_neighbors_sharing_2plus_elements_woe         0.358287        0.006419
+                      email_domain_woe         0.034530        0.006048
+              bureau_inquiries_90d_woe         0.029835        0.004303
+                 ssn_dob_gap_years_woe         0.025822        0.002795
+                     phone_is_voip_woe         0.013999        0.003297
+                        bureau_hit_woe         0.011409        0.004155
+             limit_to_income_ratio_woe         0.008297        0.001506
+                    thin_file_flag_woe         0.006619        0.002014
+             address_tenure_months_woe         0.005309        0.003485
+                       claimed_age_woe         0.002120        0.001945
+
+=== GLOBAL IMPORTANCE: TREE CHALLENGER ===
+                  feature  importance_mean  importance_std
+        max_element_reuse         0.430788        0.009919
+    limit_to_income_ratio         0.064839        0.008323
+    credit_file_age_years         0.055815        0.004870
+              claimed_age         0.038553        0.004479
+        ssn_dob_gap_years         0.023224        0.005533
+     bureau_inquiries_90d         0.021125        0.005216
+               bureau_hit         0.016366        0.005608
+            phone_is_voip         0.007340        0.003288
+time_to_fill_form_seconds         0.006680        0.005084
+             email_domain         0.004728        0.000862
+
+
+=== EXAMPLE CASE NARRATIVES ===
+
+[CASE TYPE: TRUE POSITIVE -- ring-based synthetic identity fraud]
+CASE NARRATIVE -- APP_0005886
+Model score: 100.0% estimated fraud probability
+
+Network context: this application is linked to 5 other application(s) via shared identity elements (address/device/email/phone).
+
+Top 5 contributing factors (by impact on the score):
+  - n_neighbors_sharing_2plus_elements = 5 (increases fraud likelihood, WoE=-4.00)
+  - email_domain = mailinator.com (increases fraud likelihood, WoE=-1.25)
+  - phone_is_voip = True (increases fraud likelihood, WoE=-0.89)
+  - bureau_hit = False (increases fraud likelihood, WoE=-0.81)
+  - bureau_inquiries_90d = 2 (increases fraud likelihood, WoE=-0.24)
+
+------------------------------------------------------------
+
+[CASE TYPE: TRUE POSITIVE -- lone-wolf synthetic identity fraud, no network links]
+CASE NARRATIVE -- APP_0036995
+Model score: 89.2% estimated fraud probability
+
+Network context: no shared identity elements detected with other applications.
+
+Top 5 contributing factors (by impact on the score):
+  - email_domain = yopmail.com (increases fraud likelihood, WoE=-1.21)
+  - bureau_hit = False (increases fraud likelihood, WoE=-0.81)
+  - bureau_inquiries_90d = 3 (increases fraud likelihood, WoE=-0.60)
+  - n_neighbors_sharing_2plus_elements = 0 (decreases fraud likelihood, WoE=0.25)
+  - thin_file_flag = True (increases fraud likelihood, WoE=-0.41)
+
+------------------------------------------------------------
+
+[CASE TYPE: FALSE POSITIVE -- legitimate applicant in a shared-address/device cluster (e.g. family, roommates, or large apartment building), scored high risk because the model partly relies on network features that cannot fully distinguish a legitimate shared household from a fraud ring]
+CASE NARRATIVE -- APP_0013168
+Model score: 88.7% estimated fraud probability
+
+Network context: this application is linked to 3 other application(s) via shared identity elements (address/device/email/phone).
+
+Top 5 contributing factors (by impact on the score):
+  - email_domain = mailinator.com (increases fraud likelihood, WoE=-1.25)
+  - phone_is_voip = True (increases fraud likelihood, WoE=-0.89)
+  - n_neighbors_sharing_2plus_elements = 0 (decreases fraud likelihood, WoE=0.25)
+  - bureau_hit = True (decreases fraud likelihood, WoE=0.30)
+  - bureau_inquiries_90d = 2 (increases fraud likelihood, WoE=-0.24)
